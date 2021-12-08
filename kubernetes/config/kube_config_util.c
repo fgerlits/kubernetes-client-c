@@ -93,19 +93,7 @@ static void kubeconfig_rm_tempfile(const char *filename)
 
 void unsetSslConfig(sslConfig_t * sslConfig)
 {
-    if (!sslConfig) {
-        return;
-    }
-
-    if (sslConfig->clientCertFile) {
-        kubeconfig_rm_tempfile(sslConfig->clientCertFile);
-    }
-    if (sslConfig->clientKeyFile) {
-        kubeconfig_rm_tempfile(sslConfig->clientKeyFile);
-    }
-    if (sslConfig->CACertFile) {
-        kubeconfig_rm_tempfile(sslConfig->CACertFile);
-    }
+    // NO-OP: used to remove temporary certificate files; we no longer create those
 }
 
 void clear_and_free_string_pair_list(list_t * list)

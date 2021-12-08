@@ -49,14 +49,8 @@ static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t *
         if (user->client_certificate) {
             client_cert_file = strdup(user->client_certificate);
         }
-        if (user->client_certificate_data) {
-            client_cert_file = kubeconfig_mk_cert_key_tempfile(user->client_certificate_data);
-        }
         if (user->client_key) {
             client_key_file = strdup(user->client_key);
-        }
-        if (user->client_key_data) {
-            client_key_file = kubeconfig_mk_cert_key_tempfile(user->client_key_data);
         }
     }
 
@@ -65,9 +59,6 @@ static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t *
         if (0 == insecure_skip_tls_verify) {
             if (cluster->certificate_authority) {
                 ca_file = strdup(cluster->certificate_authority);
-            }
-            if (cluster->certificate_authority_data) {
-                ca_file = kubeconfig_mk_cert_key_tempfile(cluster->certificate_authority_data);
             }
         }
     }
@@ -190,9 +181,6 @@ static int kubeconfig_exec(kubeconfig_property_t * current_user)
     }
     if (EXEC_CREDENTIAL_TYPE_TOKEN == exec_output->status->type && exec_output->status->token) {
         current_user->token = strdup(exec_output->status->token);
-    } else if (exec_output->status->clientCertificateData && exec_output->status->clientKeyData) {
-        current_user->client_certificate_data = strdup(exec_output->status->clientCertificateData);
-        current_user->client_key_data = strdup(exec_output->status->clientKeyData);
     } else {
         rc = -1;
         fprintf(stderr, "%s: Cannot get the authentication infomation from the kubeconfig exec result.\n", fname);

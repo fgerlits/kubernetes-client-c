@@ -190,8 +190,6 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
             if (KUBECONFIG_PROPERTY_TYPE_CLUSTER == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY)) {
                     property->certificate_authority = strdup(value->data.scalar.value);
-                } else if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY_DATA)) {
-                    property->certificate_authority_data = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
                     property->server = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_INSECURE_SKIP_TLS_VERIFY)) {
@@ -200,12 +198,8 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
             } else if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE)) {
                     property->client_certificate = strdup(value->data.scalar.value);
-                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
-                    property->client_certificate_data = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY)) {
                     property->client_key = strdup(value->data.scalar.value);
-                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY_DATA)) {
-                    property->client_key_data = strdup(value->data.scalar.value);
                 }
             } else if (KUBECONFIG_PROPERTY_TYPE_CONTEXT == property->type) {
                 if (0 == strcmp(key->data.scalar.value, KEY_CLUSTER)) {
@@ -825,11 +819,12 @@ static int append_key_map_to_mapping_node(yaml_document_t * output_document, int
         }
     } else if (KUBECONFIG_PROPERTY_TYPE_CLUSTER == property->type) {
         /* Add 'certificate-authority-data': '' */
-        if (property->certificate_authority_data) {
-            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_CERTIFICATE_AUTHORITY_DATA, property->certificate_authority_data)) {
-                return -1;
-            }
-        }
+// TODO(fgerlits): do we need this?
+//        if (property->certificate_authority_data) {
+//            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_CERTIFICATE_AUTHORITY_DATA, property->certificate_authority_data)) {
+//                return -1;
+//            }
+//        }
 
         /* Add 'server': '' */
         if (property->server) {
@@ -846,18 +841,20 @@ static int append_key_map_to_mapping_node(yaml_document_t * output_document, int
         }
 
         /* Add 'client-certificate-data': '' */
-        if (property->client_certificate_data) {
-            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_CLIENT_CERTIFICATE_DATA, property->client_certificate_data)) {
-                return -1;
-            }
-        }
+// TODO(fgerlits): do we need this?
+//        if (property->client_certificate_data) {
+//            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_CLIENT_CERTIFICATE_DATA, property->client_certificate_data)) {
+//                return -1;
+//            }
+//        }
 
         /* Add 'client-key-data': '' */
-        if (property->client_key_data) {
-            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_CLIENT_KEY_DATA, property->client_key_data)) {
-                return -1;
-            }
-        }
+// TODO(fgerlits): do we need this?
+//        if (property->client_key_data) {
+//            if (-1 == append_key_stringvalue_to_mapping_node(output_document, map, KEY_CLIENT_KEY_DATA, property->client_key_data)) {
+//                return -1;
+//            }
+//        }
 
         /* Add 'exec': {} */
         if (property->exec) {
