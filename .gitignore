@@ -54,3 +54,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# added by fgerlits
+.idea
+*.swp
+cmake-build-debug
+libwebsockets
+libyaml
