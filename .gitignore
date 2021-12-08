@@ -61,3 +61,4 @@ dkms.conf
 cmake-build-debug
 libwebsockets
 libyaml
+install
