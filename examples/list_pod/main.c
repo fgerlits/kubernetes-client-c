@@ -49,7 +49,9 @@ int main()
         return -1;
     }
 
+    printf("All good so far, trying to list pods...\n");
     list_pod(apiClient);
+    printf("... done\n");
 
     apiClient_free(apiClient);
     apiClient = NULL;

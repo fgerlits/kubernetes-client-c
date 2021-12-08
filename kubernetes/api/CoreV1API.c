@@ -23709,6 +23709,7 @@ end:
 v1_pod_list_t*
 CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmarks , char * _continue , char * fieldSelector , char * labelSelector , int limit , char * pretty , char * resourceVersion , char * resourceVersionMatch , int timeoutSeconds , int watch )
 {
+    printf("CoreV1API_listPodForAllNamespaces 1\n");
     list_t    *localVarQueryParameters = list_create();
     list_t    *localVarHeaderParameters = NULL;
     list_t    *localVarFormParameters = NULL;
@@ -23722,6 +23723,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
     snprintf(localVarPath, sizeOfPath, "/api/v1/pods");
 
 
+    printf("CoreV1API_listPodForAllNamespaces 2\n");
 
 
     // query parameters
@@ -23737,6 +23739,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         list_addElement(localVarQueryParameters,keyPairQuery_allowWatchBookmarks);
     }
 
+    printf("CoreV1API_listPodForAllNamespaces 3\n");
     // query parameters
     char *keyQuery__continue = NULL;
     char * valueQuery__continue = NULL;
@@ -23749,6 +23752,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         list_addElement(localVarQueryParameters,keyPairQuery__continue);
     }
 
+    printf("CoreV1API_listPodForAllNamespaces 4\n");
     // query parameters
     char *keyQuery_fieldSelector = NULL;
     char * valueQuery_fieldSelector = NULL;
@@ -23761,6 +23765,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         list_addElement(localVarQueryParameters,keyPairQuery_fieldSelector);
     }
 
+    printf("CoreV1API_listPodForAllNamespaces 5\n");
     // query parameters
     char *keyQuery_labelSelector = NULL;
     char * valueQuery_labelSelector = NULL;
@@ -23773,6 +23778,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         list_addElement(localVarQueryParameters,keyPairQuery_labelSelector);
     }
 
+    printf("CoreV1API_listPodForAllNamespaces 6\n");
     // query parameters
     char *keyQuery_limit = NULL;
     char * valueQuery_limit = NULL;
@@ -23786,6 +23792,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         list_addElement(localVarQueryParameters,keyPairQuery_limit);
     }
 
+    printf("CoreV1API_listPodForAllNamespaces 7\n");
     // query parameters
     char *keyQuery_pretty = NULL;
     char * valueQuery_pretty = NULL;
@@ -23798,6 +23805,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
         list_addElement(localVarQueryParameters,keyPairQuery_pretty);
     }
 
+    printf("CoreV1API_listPodForAllNamespaces 8\n");
     // query parameters
     char *keyQuery_resourceVersion = NULL;
     char * valueQuery_resourceVersion = NULL;
@@ -23852,6 +23860,8 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf"); //produces
     list_addElement(localVarHeaderType,"application/json;stream=watch"); //produces
     list_addElement(localVarHeaderType,"application/vnd.kubernetes.protobuf;stream=watch"); //produces
+
+    printf("apiClient_invoke BEGIN\n");
     apiClient_invoke(apiClient,
                     localVarPath,
                     localVarQueryParameters,
@@ -23861,6 +23871,7 @@ CoreV1API_listPodForAllNamespaces(apiClient_t *apiClient, int allowWatchBookmark
                     localVarContentType,
                     localVarBodyParameters,
                     "GET");
+    printf("apiClient_invoke END, response code: %ld\n", apiClient->response_code);
 
     if (apiClient->response_code == 200) {
         printf("%s\n","OK");

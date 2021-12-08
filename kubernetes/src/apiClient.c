@@ -209,7 +209,9 @@ void apiClient_invoke(apiClient_t    *apiClient,
                       list_t        *contentType,
                       char        *bodyParameters,
                       char        *requestType) {
+    printf("apiClient_invoke 1\n");
     CURL *handle = curl_easy_init();
+    printf("apiClient_invoke 2\n");
     CURLcode res;
 
     if(handle) {
@@ -433,7 +435,9 @@ void apiClient_invoke(apiClient_t    *apiClient,
             postData(handle, bodyParameters);
         }
 
+        printf("BEFORE curl_easy_perform\n");
         res = curl_easy_perform(handle);
+        printf("AFTER curl_easy_perform\n");
 
         curl_slist_free_all(headers);
 
