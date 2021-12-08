@@ -1,0 +1,4 @@
+wget --ca-certificate=/home/fgerlits/.minikube/ca.crt \
+  --certificate=/home/fgerlits/.minikube/profiles/minikube/client.crt \
+  --private-key=/home/fgerlits/.minikube/profiles/minikube/client.key \
+  https://172.17.0.2:8443/api/v1/pods
