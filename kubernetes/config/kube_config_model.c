@@ -60,6 +60,10 @@ void kubeconfig_property_free(kubeconfig_property_t * property)
             free(property->server);
             property->server = NULL;
         }
+        if (property->certificate_authority) {
+            free(property->certificate_authority);
+            property->certificate_authority = NULL;
+        }
         if (property->certificate_authority_data) {
             free(property->certificate_authority_data);
             property->certificate_authority_data = NULL;
@@ -67,9 +71,17 @@ void kubeconfig_property_free(kubeconfig_property_t * property)
     }
 
     if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
+        if (property->client_certificate) {
+            free(property->client_certificate);
+            property->client_certificate = NULL;
+        }
         if (property->client_certificate_data) {
             free(property->client_certificate_data);
             property->client_certificate_data = NULL;
+        }
+        if (property->client_key) {
+            free(property->client_key);
+            property->client_key = NULL;
         }
         if (property->client_key_data) {
             free(property->client_key_data);

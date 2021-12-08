@@ -43,10 +43,13 @@ mapping :: = MAPPING - START(node node) * MAPPING - END
 #define KEY_USER_AUTH_PROVIDER_CONFIG_IDP_CERTIFICATE_AUTHORITY_DATA "idp-certificate-authority-data"
 #define KEY_USER_AUTH_PROVIDER_CONFIG_IDP_ISSUE_URL "idp-issuer-url"
 #define KEY_USER_AUTH_PROVIDER_CONFIG_REFRESH_TOKEN "refresh-token"
+#define KEY_CERTIFICATE_AUTHORITY "certificate-authority"
 #define KEY_CERTIFICATE_AUTHORITY_DATA "certificate-authority-data"
 #define KEY_INSECURE_SKIP_TLS_VERIFY "insecure-skip-tls-verify"
 #define KEY_SERVER "server"
+#define KEY_CLIENT_CERTIFICATE "client-certificate"
 #define KEY_CLIENT_CERTIFICATE_DATA "client-certificate-data"
+#define KEY_CLIENT_KEY "client-key"
 #define KEY_CLIENT_KEY_DATA "client-key-data"
 #define KEY_STAUTS "status"
 #define KEY_TOKEN "token"
@@ -185,7 +188,9 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                 property->name = strdup(value->data.scalar.value);
             }
             if (KUBECONFIG_PROPERTY_TYPE_CLUSTER == property->type) {
-                if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY_DATA)) {
+                if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY)) {
+                    property->certificate_authority = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CERTIFICATE_AUTHORITY_DATA)) {
                     property->certificate_authority_data = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_SERVER)) {
                     property->server = strdup(value->data.scalar.value);
@@ -193,8 +198,12 @@ static int parse_kubeconfig_yaml_property_mapping(kubeconfig_property_t * proper
                     property->insecure_skip_tls_verify = (0 == strcmp(value->data.scalar.value, VALUE_TRUE_LOWERCASE_STRING)); //libyaml fails to parse true, but it can parse "true"!
                 }
             } else if (KUBECONFIG_PROPERTY_TYPE_USER == property->type) {
-                if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
+                if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE)) {
+                    property->client_certificate = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_CERTIFICATE_DATA)) {
                     property->client_certificate_data = strdup(value->data.scalar.value);
+                } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY)) {
+                    property->client_key = strdup(value->data.scalar.value);
                 } else if (0 == strcmp(key->data.scalar.value, KEY_CLIENT_KEY_DATA)) {
                     property->client_key_data = strdup(value->data.scalar.value);
                 }

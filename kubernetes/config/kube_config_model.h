@@ -50,12 +50,15 @@ extern "C" {
             };
             struct {            /* cluster */
                 char *server;
+                char *certificate_authority;
                 char *certificate_authority_data;
                 int insecure_skip_tls_verify;
             };
             struct {            /* user */
                 char *token;
+                char *client_certificate;
                 char *client_certificate_data;
+                char *client_key;
                 char *client_key_data;
                 struct kubeconfig_property_t *auth_provider;
                 struct kubeconfig_property_t *exec;

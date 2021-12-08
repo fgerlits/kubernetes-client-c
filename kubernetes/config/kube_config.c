@@ -46,8 +46,14 @@ static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t *
     int insecure_skip_tls_verify = 0;
 
     if (user) {
+        if (user->client_certificate) {
+            client_cert_file = strdup(user->client_certificate);
+        }
         if (user->client_certificate_data) {
             client_cert_file = kubeconfig_mk_cert_key_tempfile(user->client_certificate_data);
+        }
+        if (user->client_key) {
+            client_key_file = strdup(user->client_key);
         }
         if (user->client_key_data) {
             client_key_file = kubeconfig_mk_cert_key_tempfile(user->client_key_data);
@@ -56,8 +62,13 @@ static int setSslConfig(sslConfig_t ** pSslConfig, const kubeconfig_property_t *
 
     if (cluster) {
         insecure_skip_tls_verify = cluster->insecure_skip_tls_verify;
-        if ((0 == insecure_skip_tls_verify) && (cluster->certificate_authority_data)) {
-            ca_file = kubeconfig_mk_cert_key_tempfile(cluster->certificate_authority_data);
+        if (0 == insecure_skip_tls_verify) {
+            if (cluster->certificate_authority) {
+                ca_file = strdup(cluster->certificate_authority);
+            }
+            if (cluster->certificate_authority_data) {
+                ca_file = kubeconfig_mk_cert_key_tempfile(cluster->certificate_authority_data);
+            }
         }
     }
 
